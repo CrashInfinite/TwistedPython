@@ -9,7 +9,7 @@ class MainChat(LineReceiver):
         self.name = None
         self.state = "GETNAME"
 
-    def connectionMade(self):
+    def connectionMade(self): 
         self.sendLine("Please choose a username")
 
     def connectionLost(self, reason):
@@ -18,20 +18,20 @@ class MainChat(LineReceiver):
 
     def lineReceived(self, line):
         if self.state == "GETNAME":
-            self.handle_GETNAME(line)
+            self.getName(line)
         else:
-            self.handle_CHAT(line)
+            self.chat(line)
 
-    def handle_GETNAME(self, name):http://en.wikipedia.org/wiki/John_Malkovich
+    def getName(self, name): 
         if self.users.has_key(name):
             self.sendLine("Username taken, please choose another.")
             return
         self.sendLine("Welcome, %s!" % (name,))
         self.name = name
         self.users[name] = self
-        self.state = "CHAT"
-
-    def handle_CHAT(self, message):
+        self.state = "CHAT" 
+        
+    def chat(self, message):
         message = "<%s> %s" % (self.name, message)
         for name, protocol in self.users.iteritems():
             if protocol != self:
@@ -41,7 +41,7 @@ class MainChat(LineReceiver):
 class ChatFactory(Factory):
 
     def __init__(self):
-        self.users = {} # maps user names to Chat instances
+        self.users = {}
 
     def buildProtocol(self, addr):
         return MainChat(self.users) 
