@@ -22,7 +22,7 @@ class MainChat(LineReceiver):
         else:
             self.handle_CHAT(line)
 
-    def handle_GETNAME(self, name):
+    def handle_GETNAME(self, name):http://en.wikipedia.org/wiki/John_Malkovich
         if self.users.has_key(name):
             self.sendLine("Username taken, please choose another.")
             return
@@ -44,7 +44,7 @@ class ChatFactory(Factory):
         self.users = {} # maps user names to Chat instances
 
     def buildProtocol(self, addr):
-        return Chat(self.users) 
+        return MainChat(self.users) 
 
 
 reactor.listenTCP(1025, ChatFactory())
